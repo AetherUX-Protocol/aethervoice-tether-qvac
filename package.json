@@ -1,0 +1,32 @@
+{
+  "name": "aethervoice-tether-qvac",
+  "version": "1.0.0",
+  "description": "Sovereign Intelligence for B2B Trade: Local AI Audits via QVAC and Solana Settlement via WDK",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "install:all": "npm install && cd client && npm install",
+    "setup:models": "node qvac-engine/scripts/fetchModels.js",
+    "setup:rag": "node qvac-engine/scripts/setup-rag.js",
+    "bench": "node qvac-engine/scripts/audit-bench.js",
+    "dev:client": "cd client && npm start",
+    "start": "npm run install:all && npm run setup:models && npm run dev:client"
+  },
+  "keywords": [
+    "Tether",
+    "QVAC",
+    "WDK",
+    "Solana",
+    "Local-AI",
+    "B2B",
+    "Sovereign-Intelligence"
+  ],
+  "author": "AetherUX Protocol",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@qvac/sdk": "^1.0.0",
+    "@tetherto/wdk": "^1.0.0-beta",
+    "@tetherto/wdk-wallet-solana": "^1.0.0-beta",
+    "dotenv": "^16.0.0"
+  }
+}
