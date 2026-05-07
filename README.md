@@ -57,7 +57,20 @@ async function performSovereignAudit(tradeDocument) {
         return { status: "Verified", txHash: tx.hash };
     }
 }
+
 Installation & Usage
+# 1. Clone the repository
+git clone https://github.com/AetherUX-Protocol/aethervoice-tether-qvac.git
+
+# 2. Install Sovereign Intelligence Dependencies
+npm install @qvac/sdk @tetherto/wdk @tetherto/wdk-wallet-solana
+
+# 3. Configure Local Environment
+cp .env.example .env
+# Add your Solana RPC and local QVAC model paths to .env
+
+# 4. Launch the AetherVoice Local Audit Engine
+npm run dev:qvac
 
 2026 Legal Compliance (The BSA/DTFB details)
 
