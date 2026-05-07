@@ -15,3 +15,50 @@ npm install @tetherto/wdk @tetherto/wdk-wallet-solana
 
 # 3. Launch the local audit engine
 npm run start:qvac
+## 🛠 Technical Implementation.
+AetherVoice leverages the QVAC SDK for local inference and Tether WDK for non-custodial Solana settlements. Below is the core logic for the Sovereign Trust Audit
+/**
+ * AetherVoice Core Logic: Sovereign Trust Audit
+ * Powered by Tether QVAC & WDK
+ */
+
+import { loadModel, LLAMA_3_2_1B_INST_Q4_0, completion, unloadModel } from "@qvac/sdk";
+import WDK from '@tetherto/wdk';
+import WalletManagerSolana from '@tetherto/wdk-wallet-solana';
+
+async function performSovereignAudit(tradeDocument) {
+    // 1. Initialize Local QVAC LLM for Private Inference
+    const modelId = await loadModel({ 
+        modelSrc: LLAMA_3_2_1B_INST_Q4_0, 
+        modelType: "llm" 
+    });
+
+    // 2. Perform Local Risk Analysis (Private, Offline)
+    const auditResponse = await completion({
+        model: modelId,
+        prompt: `Audit this trade document for compliance with DTFB 2026 and BSA 2023 standards: ${tradeDocument}`,
+        maxTokens: 500
+    });
+
+    // 3. If Trust Score is high, trigger Solana settlement via WDK
+    if (auditResponse.trustScore > 0.95) {
+        const wdk = new WDK(process.env.MNEMONIC);
+        const solanaWallet = wdk.registerWallet('solana', WalletManagerSolana, {
+            provider: 'https://api.mainnet-beta.solana.com'
+        });
+
+        const account = await solanaWallet.getAccount('solana', 0);
+        const tx = await account.transfer({
+            token: 'Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB', // USDt Mint
+            recipient: 'RECIPIENT_ADDRESS',
+            amount: 500000n // Example amount
+        });
+        
+        return { status: "Verified", txHash: tx.hash };
+    }
+}
+Installation & Usage
+
+2026 Legal Compliance (The BSA/DTFB details)
+
+Demo Video Link: https://youtu.be/kNYzBxF2Z9s
