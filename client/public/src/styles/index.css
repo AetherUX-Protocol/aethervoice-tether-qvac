@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-brand-dark text-brand-text font-sans antialiased;
+}
+
+.audit-card {
+  @apply bg-brand-surface p-6 rounded-lg shadow-sovereign border border-brand-primary/20;
+}
+
+.btn-primary {
+  @apply bg-brand-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-all;
+}
