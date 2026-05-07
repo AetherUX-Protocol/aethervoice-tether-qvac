@@ -1,0 +1,4 @@
+# Ignore the actual binary model files
+*.gguf
+*.onnx
+*.bin
